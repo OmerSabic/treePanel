@@ -1,0 +1,42 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 97vh;
+    width: 100vw;
+    overflow: hidden;
+}
+
+
+#tree-container {
+    overflow: scroll;
+    background-color: darkslategrey;
+    height: 97vh;
+}
+
+#skill-editor {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    justify-content: space-between;
+    padding: 2rem;
+}
+
+.node {
+    position: absolute;
+    display: block;
+    width: 10rem;
+    height: 7rem;
+    background-color: #fff;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 5px;
+    box-shadow: 0 0 5px #000;
+}
+
+.children {
+    display: flex;
+    flex-direction: row;
+    margin-left: 10px;
+    width: auto
+}
