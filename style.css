@@ -1,28 +1,74 @@
 html, body {
     margin: 0;
     padding: 0;
-    height: 97vh;
+    height: 100vh;
     width: 100vw;
-    overflow: hidden;
+    overflow: scroll;
 }
 
 
 #tree-container {
     overflow: scroll;
     background-color: darkslategrey;
-    height: 97vh;
 }
 
 #skill-editor {
-    position: relative;
+    position: absolute;
     display: flex;
     flex-direction: column;
     background-color: white;
     justify-content: space-between;
-    padding: 2rem;
+    overflow: hidden;
+    padding: 3rem 0;
+    width: 30rem;
+    height: 100%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    z-index: 100;
 }
 
-.node {
+.expanded {
+    width: 30rem !important;
+}
+
+.json-input_last-session-container {
+    display: none;
+}
+
+#editor-expand {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: auto;
+    left: auto;
+    z-index: 99;
+    cursor: pointer;
+    margin: 20px 20px 0 0;
+    padding: 0;
+    width: 3rem;
+    height: 3rem;
+}
+
+#editor-close {
+    position: absolute;
+    top: 0;
+    right: auto;
+    bottom: auto;
+    left: 0;
+    z-index: 101;
+    cursor: pointer;
+    margin: 20px 0 0 20px;
+}
+
+#skill-inputs {
+    display: flex;
+    flex-direction: column;
+    padding-right: auto;
+}
+
+/* .node {
     position: absolute;
     display: block;
     width: 10rem;
@@ -39,4 +85,4 @@ html, body {
     flex-direction: row;
     margin-left: 10px;
     width: auto
-}
+} */

@@ -1,46 +1,74 @@
 let childrenCount = {};
-
-const seperationPX = [25, 125];
+let highestId = 0;
 let changedTree = [];
 
-function drawNode(data, parentId) {
-    let node = document.createElement('div');
+async function drawNode(data, parentId) {
+    console.log(data)
+    let node = document.createElement('li');
+    let nodeAncor = document.createElement('a');
+    let nodeTitle = document.createElement('span');
+    nodeTitle.innerHTML = data.title;
     node.classList.add('node');
     node.id = `node-${data.id}`;
-    node.innerHTML = `<p>${data.title}</p>`;
-
-    // place the node in the correct spot under the parent using absolute positioning
-    let parentNode = document.getElementById(`node-${parentId}`);
-
-    if (parentNode) {
-        childrenCount[parentId] = childrenCount[parentId] ? childrenCount[parentId] + 1 : 1;
-        node.style.left = `${parentNode.offsetLeft + parentNode.offsetWidth + seperationPX[0]}px`;
-        node.style.top = `${parentNode.offsetTop + seperationPX[1] * childrenCount[parentId]}px`;
-    }
     
-
-    node.addEventListener('click', function () {
+    nodeAncor.addEventListener('click', function () {
         showcaseData(findNode(changedTree, data.id));
     });
-
-    node.addEventListener('dblclick', function () {
-        drawNode({ id: '99', title: 'New Node', category: 'root', children: [] }, data.id);
+    
+    nodeAncor.addEventListener('contextmenu', function () {
+        let newNode = {
+            "id": parseInt(highestId + 1),
+            "iconName": "edit",
+            "title": "Editing I",
+            "level": 1,
+            "goal": "Edit the data",
+            "frequency": "DAILY",
+            "timelimit": "1x Week",
+            "xp": 69,
+            "category": "new",
+            "type": "skill",
+            "requires": [],
+            "children": []
+        };
+        addNode(changedTree, parseInt(data.id), newNode);
+        drawNode(newNode, data.id);
     }); 
 
-
-    if (parentId) {
-        node.classList.add(`parent-${parentId}`);
+    nodeAncor.appendChild(nodeTitle);
+    node.appendChild(nodeAncor);
+    
+    
+    if(!parentId && parentId !== 0) {
+        document.querySelector('.tree').appendChild(node);
+        return;
     }
-    document.querySelector('#tree-container').appendChild(node);
+
+    let parentNode = document.querySelector(`#node-${parentId}-ul`);
+
+    if (!parentNode) {
+        let ul = document.createElement('ul');
+        ul.id = `node-${parentId}-ul`;
+        document.getElementById(`node-${parentId}`).appendChild(ul);
+    }
+
+    // update highestId if the new node has a higher id than the current highestId
+    if (data.id > highestId) {
+        console.log(`${data.id} is larger than ${highestId}`);
+        highestId = data.id;
+    }
+
+    document.getElementById(`node-${parentId}-ul`).appendChild(node);
 
 
 }
 
-function addNode(tree, parentId,newNodeData) {
+function addNode(tree, parentId, newNodeData) {
     let parent = findNode(tree, parentId);
     if (parent) {
+        if(!Object.values(parent).includes("children")) parent.children = [];
         parent.children.push(newNodeData.id);
         changedTree.push(newNodeData);
+        window.localStorage.setItem('tree', JSON.stringify(changedTree));
     }
     else {
         console.log(`No parent found for ${parentId}`);
@@ -60,8 +88,10 @@ function drawChallenge(data) {
 }
 
 function drawChildren(list, parent) {
+    if(!parent.children) return;
     parent.children.forEach(child => {
         let childData = findNode(list, child);
+        console.log(child);
         drawNode(findNode(list, child), parent.id);
         if (childData) {
             console.log(`Drawing child ${childData.title}`);
@@ -134,15 +164,18 @@ function showcaseData(data) {
 }
 
 function saveButtonClick() {
-    console.log("click")
     let id = document.querySelector('#skill-inputs').getAttribute('data-id');
-    console.log(id);
+    console.log(`Saving ${id}`);
     let data = {};
     let inputs = document.querySelectorAll('#skill-inputs input');
-    data.id = id;
     inputs.forEach(input => {
         data[input.name] = input.value;
     });
+    let type = document.querySelector('#skill-inputs #node-type').value;
+    data.type = type;
+    data.id = parseInt(id);
+
+    data.children = findNode(changedTree, data.id).children;
     updateNode(id, data);
 }
 
@@ -150,7 +183,8 @@ function updateNode(id, data) {
     let node = document.getElementById(`node-${id}`);
     if(node) {
         changedTree[findNodeIndex(changedTree, id)] = data;
-        node.innerHTML = `<p>${data.title}</p>`;
+        node.querySelector('span').innerHTML = data.title;
+        window.localStorage.setItem('tree', JSON.stringify(changedTree));
     }
     else {
         console.log(`No node found for ${id}`);
@@ -163,7 +197,34 @@ function displayJson() {
 }
 
 function loadJson() {
+    document.querySelector('.tree').innerHTML = "";
     let json = document.querySelector('#json-input').value;
     let data = JSON.parse(json);
     init(data);
 }
+
+function loadLastSession() {
+    let tree = window.localStorage.getItem('tree');
+    if (tree) {
+        init(JSON.parse(tree));
+    }
+    else {
+        console.log('No tree found');
+    }
+}
+
+document.querySelector("#jsonInputModal").addEventListener('shown.bs.modal', () => {
+    if (window.localStorage.getItem('tree')) { 
+        document.querySelector('.json-input_last-session-container').style.display = "block";
+    }
+})
+
+document.querySelector("#editor-expand").addEventListener('click', () => {
+    let editor = document.querySelector('#skill-editor');
+    editor.classList = 'expanded';
+});
+
+document.querySelector("#editor-close").addEventListener('click', () => {
+    let editor = document.querySelector('#skill-editor');
+    editor.classList.remove('expanded');
+});

@@ -53,11 +53,11 @@
         "iconName": "relationships",
         "title": "Relationships I",
         "level": 1,
-        "goal": "Hold eye contact",
+        "goal": "Find a partner",
         "frequency": "DAILY",
         "timelimit": "1x Week",
         "xp": 100,
-        "category": "Social Skills",
+        "category": "skills",
         "type": "skill",
         "requires": [],
         "children": []
