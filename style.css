@@ -7,6 +7,11 @@ html, body {
 }
 
 
+.row > div {
+    width: auto;
+    max-width: none;
+}
+
 #tree-container {
     overflow: scroll;
     background-color: darkslategrey;

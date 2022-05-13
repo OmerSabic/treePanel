@@ -7,11 +7,10 @@
 .tree {
 	display: grid;
 	font-family: 'Poppins', sans-serif;
-	white-space:nowrap;
+	white-space: nowrap;
 }
 
 .tree-container {
-	width: auto;
 	overflow: scroll;
 }
 
