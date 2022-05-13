@@ -15,7 +15,8 @@ async function drawNode(data, parentId) {
         showcaseData(findNode(changedTree, data.id));
     });
     
-    nodeAncor.addEventListener('contextmenu', function () {
+    nodeAncor.addEventListener('contextmenu', function (event) {
+        event.preventDefault();
         let newNode = {
             "id": parseInt(highestId + 1),
             "iconName": "edit",
@@ -32,6 +33,8 @@ async function drawNode(data, parentId) {
         };
         addNode(changedTree, parseInt(data.id), newNode);
         drawNode(newNode, data.id);
+
+        return false;
     }); 
 
     nodeAncor.appendChild(nodeTitle);
@@ -43,7 +46,7 @@ async function drawNode(data, parentId) {
         return;
     }
 
-    let parentNode = document.querySelector(`#node-${parentId}-ul`);
+    let parentNode = document.getElementById(`node-${parentId}-ul`);
 
     if (!parentNode) {
         let ul = document.createElement('ul');
@@ -65,7 +68,7 @@ async function drawNode(data, parentId) {
 function addNode(tree, parentId, newNodeData) {
     let parent = findNode(tree, parentId);
     if (parent) {
-        if(!Object.values(parent).includes("children")) parent.children = [];
+        if(!parent.children && parent.children != []) parent.children = [];
         parent.children.push(newNodeData.id);
         changedTree.push(newNodeData);
         window.localStorage.setItem('tree', JSON.stringify(changedTree));
@@ -164,16 +167,13 @@ function showcaseData(data) {
 }
 
 function saveButtonClick() {
-    let id = document.querySelector('#skill-inputs').getAttribute('data-id');
+    let id = parseInt(document.querySelector('#skill-inputs').getAttribute('data-id'));
     console.log(`Saving ${id}`);
-    let data = {};
+    let data = findNode(changedTree, id);
     let inputs = document.querySelectorAll('#skill-inputs input');
     inputs.forEach(input => {
         data[input.name] = input.value;
     });
-    let type = document.querySelector('#skill-inputs #node-type').value;
-    data.type = type;
-    data.id = parseInt(id);
 
     data.children = findNode(changedTree, data.id).children;
     updateNode(id, data);
@@ -205,6 +205,7 @@ function loadJson() {
 
 function loadLastSession() {
     let tree = window.localStorage.getItem('tree');
+    document.querySelector('.tree').innerHTML = "";
     if (tree) {
         init(JSON.parse(tree));
     }
@@ -221,7 +222,7 @@ document.querySelector("#jsonInputModal").addEventListener('shown.bs.modal', () 
 
 document.querySelector("#editor-expand").addEventListener('click', () => {
     let editor = document.querySelector('#skill-editor');
-    editor.classList = 'expanded';
+    editor.classList.add('expanded');
 });
 
 document.querySelector("#editor-close").addEventListener('click', () => {

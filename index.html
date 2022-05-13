@@ -9,7 +9,7 @@
 
 <body>
   <main class="row">
-    <div class="tree-container col-9">
+    <div class="tree-container">
       <ul class="tree">
         
       </ul>
@@ -73,7 +73,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <p id="json-output">Modal body text goes here.</p>
+          <textarea id="json-output">Modal body text goes here.</textarea>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -110,72 +110,18 @@
 
   <script src="./tree.js"></script>
   <script>
-    // var data = [{
-    //     "id": 0,
-    //     "title": "Self Improvement Skill Tree",
-    //     "category": "root",
-    //     "link": "https://www.youtube.com/watch?v=PYaixyrzDOk",
-    //     "type": "item",
-    //     "requires": [],
-    //     "children": [
-    //       1,
-    //       2
-    //     ]
-    //   },
-    //   {
-    //     "id": 1,
-    //     "iconName": "mindfulness",
-    //     "title": "Mindfulness I",
-    //     "level": 1,
-    //     "goal": "Mindfulness 2mins",
-    //     "frequency": "DAILY",
-    //     "timelimit": "1x Week",
-    //     "xp": 50,
-    //     "category": "health",
-    //     "type": "skill",
-    //     "requires": [],
-    //     "children": []
-    //   },
-    //   {
-    //     "id": 2,
-    //     "iconName": "journaling",
-    //     "title": "Journaling I",
-    //     "level": 1,
-    //     "goal": "Journal",
-    //     "frequency": "DAILY",
-    //     "timelimit": "1x Week",
-    //     "xp": 100,
-    //     "category": "skills",
-    //     "type": "skill",
-    //     "requires": [],
-    //     "children": [4, 3]
-    //   },
-    //   {
-    //     "id": 3,
-    //     "title": "Ancient Library",
-    //     "category": "Learning",
-    //     "link": "https://drive.google.com/drive/folders/1HGG7si_q8bfmT4eHEH0vcytn9TegRtPy",
-    //     "type": "item",
-    //     "requires": [],
-    //     "children": []
-    //   },
-    //   {
-    //     "id": 4,
-    //     "iconName": "relationships",
-    //     "title": "Relationships I",
-    //     "level": 1,
-    //     "goal": "Hold eye contact",
-    //     "frequency": "DAILY",
-    //     "timelimit": "1x Week",
-    //     "xp": 100,
-    //     "category": "Social Skills",
-    //     "type": "skill",
-    //     "requires": [],
-    //     "children": []
-    //   }
-    // ];
+    var data = [{
+        "id": 0,
+        "title": "root",
+        "category": "root",
+        "link": "https://www.youtube.com/watch?v=PYaixyrzDOk",
+        "type": "item",
+        "requires": [],
+        "children": []
+      }
+    ];
 
-    // init(data)
+    init(data)
   </script>
 </body>
 
