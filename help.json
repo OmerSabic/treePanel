@@ -7,25 +7,23 @@
         "type": "item",
         "requires": [],
         "children": [
-            1,
-            2,
-            1,
-            5
+            1
         ]
     },
     {
-        "title": "Meditation I",
-        "category": "meditation",
-        "level": "1",
-        "goal": "Meditate for 3 minutes",
+        "id": 1,
+        "iconName": "edit",
+        "title": "Editing I",
+        "level": 1,
+        "goal": "Edit the data",
         "frequency": "DAILY",
         "timelimit": "1x Week",
-        "xp": "100",
+        "xp": 69,
+        "category": "new",
         "type": "skill",
-        "id": 1,
+        "requires": [],
         "children": [
-            2,
-            4
+            2
         ]
     },
     {
@@ -40,48 +38,6 @@
         "category": "new",
         "type": "skill",
         "requires": [],
-        "children": [
-            3
-        ]
-    },
-    {
-        "id": 3,
-        "iconName": "edit",
-        "title": "Editing I",
-        "level": 1,
-        "goal": "Edit the data",
-        "frequency": "DAILY",
-        "timelimit": "1x Week",
-        "xp": 69,
-        "category": "new",
-        "type": "skill",
-        "requires": [],
-        "children": []
-    },
-    {
-        "id": 4,
-        "iconName": "edit",
-        "title": "Editing I",
-        "level": 1,
-        "goal": "Edit the data",
-        "frequency": "DAILY",
-        "timelimit": "1x Week",
-        "xp": 69,
-        "category": "new",
-        "type": "skill",
-        "requires": [],
-        "children": []
-    },
-    {
-        "title": "Journaling I",
-        "category": "Mental Health",
-        "level": "1",
-        "goal": "Journal",
-        "frequency": "DAILY",
-        "timelimit": "2x Weeks",
-        "xp": "100",
-        "type": "skill",
-        "id": 5,
         "children": []
     }
 ]

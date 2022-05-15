@@ -17,7 +17,7 @@ html, body {
     background-color: darkslategrey;
 }
 
-#skill-editor {
+#node-editor {
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -32,6 +32,11 @@ html, body {
     bottom: 0;
     left: auto;
     z-index: 100;
+}
+
+.edit-fields {
+    display: flex;
+    flex-direction: column;
 }
 
 .expanded {

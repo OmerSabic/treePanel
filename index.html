@@ -19,14 +19,14 @@
         <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
       </svg>
     </div>
-    <div id="skill-editor" class="col-3 expanded">
+    <div id="node-editor" class="col-3 expanded">
       <div id="editor-close">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
           <path fill-rule="evenodd" d="M11.854 4.146a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708-.708l7-7a.5.5 0 0 1 .708 0z"/>
           <path fill-rule="evenodd" d="M4.146 4.146a.5.5 0 0 0 0 .708l7 7a.5.5 0 0 0 .708-.708l-7-7a.5.5 0 0 0-.708 0z"/>
         </svg>
       </div>
-      <div id="skill-inputs"></div>
+      <div id="data-inputs"></div>
       <div id="skill-controls">
         <button class="btn btn-primary" id="save-skills" onclick="saveButtonClick()">Save Skills</button>
         <button class="btn btn-primary" id="add-skill" onclick="displayJson()" data-bs-toggle="modal" data-bs-target="#jsonOutputModal">Export JSON</button>
@@ -62,6 +62,16 @@
 
   </template>
 
+  <template id="node-edit-template">
+    <div class="edit-fields">
+
+    </div>
+    <select name="type" id="node-type">
+      <option value="skill">skill</option>
+      <option value="item">item</option>
+      <option value="challenge">challenge</option>
+    </select>
+  </template>
 
   <div id="jsonOutputModal" class="modal" tabindex="-1">
     <div class="modal-dialog" role="document">
