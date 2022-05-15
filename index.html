@@ -35,33 +35,6 @@
     </div>
   </main>
 
-  <template id="item-edit-template">
-    <input type="text" name="title" id="node-title">
-    <input type="text" name="category" id="node-category">
-    <input type="text" name="link" id="node-link">
-    <select name="type" id="node-type">
-      <option value="skill">skill</option>
-      <option value="item">item</option>
-      <option value="challenge">challenge</option>
-    </select>
-  </template>
-
-  <template id="skill-edit-template">
-    <input type="text" placeholder="title" name="title" id="node-title">
-    <input type="text" placeholder="category" name="category" id="node-category">
-    <input type="text" placeholder="level" name="level" id="node-level">
-    <input type="text" placeholder="goal" name="goal" id="node-goal">
-    <input type="text" placeholder="frequency" name="frequency" id="node-frequency">
-    <input type="text" placeholder="timelimit" name="timelimit" id="node-timelimit">
-    <input type="text" placeholder="xp" name="xp" id="node-xp">
-    <select name="type" id="node-type">
-      <option value="skill">skill</option>
-      <option value="item">item</option>
-      <option value="challenge">challenge</option>
-    </select>
-
-  </template>
-
   <template id="node-edit-template">
     <div class="edit-fields">
 
@@ -71,13 +44,14 @@
       <option value="item">item</option>
       <option value="challenge">challenge</option>
     </select>
+    <button id="deleteNode" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">Delete node and its children</button>
   </template>
 
   <div id="jsonOutputModal" class="modal" tabindex="-1">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Modal title</h5>
+          <h5 class="modal-title">JSON Export</h5>
           <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -96,7 +70,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Modal title</h5>
+          <h5 class="modal-title">JSON Input</h5>
           <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -114,6 +88,27 @@
       </div>
     </div>
   </div>
+
+  <div id="deleteConfirmModal" class="modal" tabindex="-1">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Are you sure?</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="deleteNode(changedTree, document.querySelector('.edit-fields').getAttribute('data-id'))">Delete node</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <!-- JavaScript Bundle with Popper -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

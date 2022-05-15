@@ -36,7 +36,6 @@ let typeTemplates = {
 };
 
 async function drawNode(data, parentId) {
-    console.log(data)
     let node = document.createElement('li');
     let nodeAncor = document.createElement('a');
     let nodeTitle = document.createElement('span');
@@ -89,7 +88,6 @@ async function drawNode(data, parentId) {
 
     // update highestId if the new node has a higher id than the current highestId
     if (data.id > highestId) {
-        console.log(`${data.id} is larger than ${highestId}`);
         highestId = data.id;
     }
 
@@ -111,18 +109,6 @@ function addNode(tree, parentId, newNodeData) {
     }
 }
 
-function drawItem(data) {
-
-}
-
-function drawSkill(data) {
-
-}
-
-function drawChallenge(data) {
-
-}
-
 function drawChildren(list, parent) {
     if (!parent.children) return;
     parent.children.forEach(child => {
@@ -136,6 +122,48 @@ function drawChildren(list, parent) {
     });
 }
 
+function deleteNode(list, nodeId) {
+    let node = findNode(list, nodeId);
+    
+    // delete children
+    if(node.children) {
+        deleteChildren(list, nodeId);
+    }
+
+    // remove child reference from parent
+    let parentId = document.getElementById(`node-${node.id}`).parentElement.getAttribute('id').split('-')[1];
+
+    let parentIndex = findNodeIndex(list, parentId);
+    if (parent) {
+        list[parentIndex].children = list[parentIndex].children.filter(child => child != nodeId);
+    }
+
+    document.querySelector(`#node-${nodeId}`).remove();
+    window.localStorage.setItem('tree', JSON.stringify(list));
+    list.splice(findNodeIndex(list, nodeId), 1);
+}
+
+function deleteChildren(list, nodeId) {
+    let node = findNode(list, nodeId);
+    if (node.children) {
+        node.children.forEach(child => {
+            deleteChildren(list, child);
+            let nodeIndex = findNodeIndex(list, child);
+            list.splice(nodeIndex, 1);
+        });
+    }
+    
+}
+    
+
+// function findHeritage(list, parent) {
+//     let heritage = [];
+    
+//     parent.children.forEach(child => {
+        
+//     });
+// }
+
 function init(data) {
     changedTree = data;
     console.log("initializing tree")
@@ -148,10 +176,6 @@ function init(data) {
         console.log('No root node found');
         return
     }
-
-    // for(let i = 0; i <= root.children.length; i++) {
-    //     drawNode(findNode(data, root.children[i]), root.id);
-    // }
 }
 
 function getRoot(list) {
@@ -182,24 +206,11 @@ function showcaseData(data) {
     let templateData = document.querySelector(`#node-edit-template`);
     skillEditor.innerHTML = templateData.innerHTML;
     let editFields = skillEditor.querySelector('.edit-fields');
-    // if (templateData) {
-    //     skillEditor.innerHTML = templateData.innerHTML;
-    //     // set the data-id attribute of the data-inputs to the id of the node
-    //     skillEditor.setAttribute('data-id', data.id);
-    //     console.log(data);
-    //     // populate the input fields in the data-inputs with the data from the selected node
-    //     let inputs = skillEditor.querySelectorAll('input');
-    //     inputs.forEach(input => {
-    //         input.value = data[input.name];
-    //     });
 
-    //     skillEditor.querySelector('#node-type').value = data.type;
-    // }
     editFields.innerHTML = '';
     editFields.setAttribute('data-id', data.id);
     skillEditor.querySelector('#node-type').value = data.type;
     skillEditor.querySelector('#node-type').addEventListener('change', function () {
-        console.log('new type')
         let type = skillEditor.querySelector('#node-type').value;
         editFields.innerHTML = '';
         let newData = typeTemplates[type];
@@ -222,7 +233,6 @@ function showcaseData(data) {
 
 function saveButtonClick() {
     let id = parseInt(document.querySelector('.edit-fields').getAttribute('data-id'));
-    console.log(`Saving ${id}`);
     let data = findNode(changedTree, id);
     let newData = {};
     newData.id = data.id;
@@ -285,4 +295,6 @@ document.querySelector("#editor-expand").addEventListener('click', () => {
 document.querySelector("#editor-close").addEventListener('click', () => {
     let editor = document.querySelector('#node-editor');
     editor.classList.remove('expanded');
+
+
 });

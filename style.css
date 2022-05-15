@@ -17,6 +17,11 @@ html, body {
     background-color: darkslategrey;
 }
 
+#data-inputs {
+    display: flex;
+    flex-direction: column;
+}
+
 #node-editor {
     position: absolute;
     display: flex;
